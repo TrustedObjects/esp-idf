@@ -63,8 +63,11 @@ extern "C" {
 #elif CONFIG_ESP_TLS_USING_WOLFSSL /* CONFIG_ESP_TLS_USING_MBEDTLS */
 #define ESP_TLS_ERR_SSL_WANT_READ                          -0x6900
 #define ESP_TLS_ERR_SSL_WANT_WRITE                         -0x6880
-#define ESP_TLS_ERR_SSL_TIMEOUT                            WOLFSSL_CBIO_ERR_TIMEOUT
-#endif /*CONFIG_ESP_TLS_USING_WOLFSSL */
+#elif CONFIG_ESP_TLS_USING_LIBTO /* CONFIG_ESP_TLS_USING_WOLFSSL */
+#define ESP_TLS_ERR_SSL_WANT_READ                          -0x2400 /* -TO_AGAIN */
+#define ESP_TLS_ERR_SSL_WANT_WRITE                         -0x2500 /* -(TO_AGAIN | 0x100) */
+#define ESP_TLS_ERR_SSL_TIMEOUT                            -0x2200 /* -TO_TIMEOUT */
+#endif /*CONFIG_ESP_TLS_USING_LIBTO */
 
 /**
 * Definition of different types/sources of error codes reported

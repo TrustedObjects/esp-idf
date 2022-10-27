@@ -18,6 +18,9 @@ static const char *TAG = "esp_crypto";
 #include "wolfssl/wolfcrypt/coding.h"
 #define _esp_crypto_sha1 esp_crypto_sha1_wolfSSL
 #define _esp_crypto_base64_encode esp_crypto_base64_encode_woflSSL
+#elif  CONFIG_ESP_TLS_USING_LIBTO
+#define _esp_crypto_sha1 esp_crypto_sha1_libto
+#define _esp_crypto_base64_encode esp_crypto_base64_encode_libto
 #endif
 
 #ifdef CONFIG_ESP_TLS_USING_MBEDTLS
@@ -59,6 +62,18 @@ static int esp_crypto_base64_encode_woflSSL(unsigned char *dst, size_t dlen, siz
     return Base64_Encode_NoNl((const byte *) src, (word32) slen, (byte *) dst, (word32 *) olen);
 }
 
+#elif CONFIG_ESP_TLS_USING_LIBTO
+static int esp_crypto_sha1_libto( const unsigned char *input,
+                                    size_t ilen,
+                                    unsigned char output[20])
+{
+    return ESP_ERR_NOT_SUPPORTED;
+}
+static int esp_crypto_base64_encode_libto(unsigned char *dst, size_t dlen, size_t *olen,
+        const unsigned char *src, size_t slen)
+{
+    return ESP_ERR_NOT_SUPPORTED;
+}
 #else
 #error "No TLS/SSL Stack selected"
 #endif

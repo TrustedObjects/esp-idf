@@ -323,6 +323,9 @@ typedef struct esp_tls {
 #elif CONFIG_ESP_TLS_USING_WOLFSSL
     void *priv_ctx;
     void *priv_ssl;
+#elif CONFIG_ESP_TLS_USING_LIBTO
+    void *libto_ctx;
+    void *libto_tls;
 #endif
     int sockfd;                                                                 /*!< Underlying socket file descriptor. */
 

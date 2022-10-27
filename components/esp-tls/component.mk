@@ -11,6 +11,10 @@ endif
 
 ifneq ($(CONFIG_ESP_TLS_USING_WOLFSSL), )
 COMPONENT_OBJS += esp_tls_wolfssl.o
+CFLAGS += -DWOLFSSL_USER_SETTINGS
 endif
 
-CFLAGS += -DWOLFSSL_USER_SETTINGS
+ifneq ($(CONFIG_ESP_TLS_USING_LIBTO), )
+COMPONENT_OBJS += esp_tls_libto.o
+endif
+

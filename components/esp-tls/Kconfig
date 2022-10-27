@@ -11,6 +11,9 @@ menu "ESP-TLS"
         config ESP_TLS_USING_WOLFSSL
             depends on TLS_STACK_WOLFSSL
             bool "wolfSSL (License info in wolfSSL directory README)"
+        config ESP_TLS_USING_LIBTO
+	    depends on HAS_LIBTO
+	    bool "Trusted Objects libTO"
     endchoice
 
     config ESP_TLS_USE_SECURE_ELEMENT

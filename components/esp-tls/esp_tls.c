@@ -22,6 +22,8 @@ static const char *TAG = "esp-tls";
 #include "esp_tls_mbedtls.h"
 #elif CONFIG_ESP_TLS_USING_WOLFSSL
 #include "esp_tls_wolfssl.h"
+#elif CONFIG_ESP_TLS_USING_LIBTO
+#include "esp_tls_libto.h"
 #endif
 
 #ifdef ESP_PLATFORM
@@ -66,7 +68,21 @@ static const char *TAG = "esp-tls";
 #define _esp_tls_init_global_ca_store       esp_wolfssl_init_global_ca_store
 #define _esp_tls_set_global_ca_store        esp_wolfssl_set_global_ca_store                 /*!< Callback function for setting global CA store data for TLS/SSL */
 #define _esp_tls_free_global_ca_store       esp_wolfssl_free_global_ca_store                /*!< Callback function for freeing global ca store for TLS/SSL */
-#else   /* ESP_TLS_USING_WOLFSSL */
+#elif CONFIG_ESP_TLS_USING_LIBTO /* CONFIG_ESP_TLS_USING_WOLFSSL */
+#define _esp_create_ssl_handle              esp_create_libto_tls_handle
+#define _esp_tls_handshake                  esp_libto_tls_handshake
+#define _esp_tls_read                       esp_libto_tls_read
+#define _esp_tls_write                      esp_libto_tls_write
+#define _esp_tls_conn_delete                esp_libto_tls_conn_delete
+#define _esp_tls_net_init                   esp_libto_tls_net_init
+#ifdef CONFIG_ESP_TLS_SERVER
+#error Not Implemented
+#endif  /* CONFIG_ESP_TLS_SERVER */
+#define _esp_tls_get_bytes_avail            esp_libto_tls_get_bytes_avail
+#define _esp_tls_init_global_ca_store       esp_libto_tls_init_global_ca_store
+#define _esp_tls_set_global_ca_store        esp_libto_tls_set_global_ca_store                 /*!< Callback function for setting global CA store data for TLS/SSL */
+#define _esp_tls_free_global_ca_store       esp_libto_tls_free_global_ca_store                /*!< Callback function for freeing global ca store for TLS/SSL */
+#else   /* ESP_TLS_USING_LIBTO */
 #error "No TLS stack configured"
 #endif
 

@@ -9,6 +9,11 @@ if(CONFIG_ESP_TLS_USING_WOLFSSL)
         "esp_tls_wolfssl.c")
 endif()
 
+if(CONFIG_ESP_TLS_USING_LIBTO)
+    list(APPEND srcs
+        "esp_tls_libto.c")
+endif()
+
 idf_component_register(SRCS "${srcs}"
                     INCLUDE_DIRS . esp-tls-crypto
                     PRIV_INCLUDE_DIRS "private_include"
@@ -18,6 +23,11 @@ idf_component_register(SRCS "${srcs}"
 if(CONFIG_ESP_TLS_USING_WOLFSSL)
     idf_component_get_property(wolfssl esp-wolfssl COMPONENT_LIB)
     target_link_libraries(${COMPONENT_LIB} PUBLIC ${wolfssl})
+endif()
+
+if(CONFIG_ESP_TLS_USING_LIBTO)
+    idf_component_get_property(Trusted_Objects Trusted_Objects COMPONENT_LIB)
+    target_link_libraries(${COMPONENT_LIB} PUBLIC ${Trusted_Objects})
 endif()
 
 if(CONFIG_ESP_TLS_USE_SE)
