@@ -4,14 +4,7 @@
 #include "TO.h"
 #include "TO_helper.h"
 
-#define ARRAY_LEN(a) (sizeof(a) / sizeof((a)[0]))
-
 static const char *TAG = "esp-tls-libto";
-
-static uint16_t cipher_suites[] = {
-	TO_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
-//	TO_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-};
 
 /**
  * @brief callback used by libTO to send data over socket */
@@ -78,12 +71,6 @@ esp_err_t esp_create_libto_tls_handle(const char *hostname, size_t hostlen,
 			tls, sock_send, sock_recv);
 	if(ret != TO_OK) {
 		ESP_LOGE(TAG, "TO_helper_tls_init_session: %d", (int) ret);
-		goto exit_fail;
-	}
-
-	ret = TOSE_helper_tls_set_cipher_suites(tls_ctx, cipher_suites, ARRAY_LEN(cipher_suites));
-	if(ret != TO_OK) {
-		ESP_LOGE(TAG, "TO_helper_tls_set_cipher_suites: %d", (int) ret);
 		goto exit_fail;
 	}
 
