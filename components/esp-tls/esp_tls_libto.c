@@ -172,7 +172,7 @@ ssize_t esp_libto_tls_write(struct esp_tls *tls, const char *data, size_t datale
 		ret = TOSE_helper_tls_send(tls_ctx, (const uint8_t*) data, datalen);
 	}
 	if (ret == TO_OK) {
-		return ESP_OK;
+		return datalen;
 	}
 	ESP_LOGE(TAG, "write: %04x", ret);
 	return ESP_FAIL;
