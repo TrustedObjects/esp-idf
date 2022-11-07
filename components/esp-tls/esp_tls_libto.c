@@ -180,7 +180,6 @@ ssize_t esp_libto_tls_write(struct esp_tls *tls, const char *data, size_t datale
 
 ssize_t esp_libto_tls_get_bytes_avail(esp_tls_t *tls)
 {
-	ESP_LOGE(TAG, "Not available");
 	return ESP_ERR_NOT_SUPPORTED;
 }
 
