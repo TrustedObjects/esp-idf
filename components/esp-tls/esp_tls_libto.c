@@ -52,7 +52,7 @@ static TO_lib_ret_t sock_recv(void *esp_tls, uint8_t *data, uint32_t len,
  * the first time all the context is memset-ed to 0 */
 void esp_libto_tls_net_init(esp_tls_t *tls)
 {
-	tls->libto_ctx = DEFAULT_CTX;
+	tls->libto_ctx = DEFAULT_CTX; /* FIXME: context shall be provided by app layer */
 }
 
 /**
