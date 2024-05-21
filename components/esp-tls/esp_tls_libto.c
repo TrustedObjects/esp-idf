@@ -64,6 +64,21 @@ static TO_lib_ret_t sock_recv(void *esp_tls, uint8_t *data, uint32_t len,
 }
 
 /**
+ * @brief Update libto's SE context from application
+ *
+ * @param[in] se_ctx SE (Secure Element) context for libto
+ *
+ * @note This function MUST be called at least once before using ESP-TLS module
+ *       to define the Trusted Objects Secure Element Used.
+ */
+static void *libto_se_ctx = NULL;
+
+void esp_tls_set_libto_se_ctx(void *se_ctx)
+{
+    libto_se_ctx = se_ctx; /* User Application updates the SE ctx */
+}
+
+/**
  * @brief called at initialization,
  * @param[out] tls context allocated by the caller
  *
@@ -72,8 +87,7 @@ static TO_lib_ret_t sock_recv(void *esp_tls, uint8_t *data, uint32_t len,
 
 void esp_libto_tls_net_init(esp_tls_t *tls)
 {
-	tls->libto_ctx = TODRV_SSE_get_ctx(); /* FIXME: context shall be provided by app layer */
-//	tls->libto_ctx = DEFAULT_CTX; /* FIXME: context shall be provided by app layer */
+	tls->libto_ctx = libto_se_ctx;
 }
 
 /**

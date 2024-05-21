@@ -748,6 +748,16 @@ esp_tls_client_session_t *esp_tls_get_client_session(esp_tls_t *tls);
  */
 void esp_tls_free_client_session(esp_tls_client_session_t *client_session);
 #endif /* CONFIG_ESP_TLS_CLIENT_SESSION_TICKETS */
+
+#if CONFIG_ESP_TLS_USING_LIBTO
+/**
+ * @brief Update Update libto's SE context from application
+ *
+ * @param[in] se_ctx SE (Secure Element) context for libto
+ */
+void esp_tls_set_libto_se_ctx(void *se_ctx);
+#endif
+
 #ifdef __cplusplus
 }
 #endif
